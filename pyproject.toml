@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "english-learning-feedback"
+version = "0.1.0"
+description = ""
+authors = ["yusuke <theshoreunder@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+google-cloud-speech = "^2.27.0"
+google = "^3.0.0"
+notebook = "^7.2.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
