@@ -4,6 +4,10 @@
   - Mainly, this app evaluates your speaking ability.
   - Focusing on intermediate level to increase vocablary.
 
+## Architecture
+
+![Architecture](data/architecture.png)
+
 ## Tech Stack
 
 - Python
@@ -20,4 +24,4 @@
 - [x] Check VertexAI Gemini
 - [x] Check VertexAI Gemini with system instructions
 - [ ] Check LangChain Gemini
-- [ ] High-level architecture
+- [x] High-level architecture
