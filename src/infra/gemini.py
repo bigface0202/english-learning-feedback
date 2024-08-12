@@ -1,10 +1,13 @@
 import vertexai
 import json
+from typing import List
 from vertexai.generative_models import GenerativeModel, Part, SafetySetting, FinishReason
 
+from src.models.message import Message
 
 class Gemini:
-    def __init__(self) -> None:
+    def __init__(self,
+                 conversation_history: List[Message] = []) -> None:
         self.safety_settings = [
             SafetySetting(
                 category=SafetySetting.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
@@ -38,19 +41,24 @@ class Gemini:
             "temperature": 1,
             "top_p": 0.95,
         }
+        self.conversation_history = conversation_history
         self.model = GenerativeModel(
             "gemini-1.5-flash-001",
             system_instruction = [
-                self.instrcution
+                self.instruction
                 ]
         )
 
 
     def generate_response(self, 
                           human_message: str) -> str:
+        # Create prompt
+        last_5_messages = self.conversation_history[-6:]
+        input = "".join(f"{message.variant}: {message.text}" for message in last_5_messages) + f"human: {human_message}"
+
         response = self.model.generate_content(
             [
-                human_message
+                input
             ],
             generation_config=self.generation_config,
             safety_settings=self.safety_settings,
