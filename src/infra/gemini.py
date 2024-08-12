@@ -1,11 +1,10 @@
 import vertexai
+import json
 from vertexai.generative_models import GenerativeModel, Part, SafetySetting, FinishReason
-import vertexai.preview.generative_models as generative_models
+
 
 class Gemini:
-    def __init__(self,
-                 project_id: str,
-                 location: str) -> None:
+    def __init__(self) -> None:
         self.safety_settings = [
             SafetySetting(
                 category=SafetySetting.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
@@ -24,7 +23,10 @@ class Gemini:
                 threshold=SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
             ),
         ]
-        vertexai.init(project = project_id, location = location)
+        # TODO: 環境変数の埋め込み
+        with open("../environments/env.json") as f:
+            env = json.load(f)
+        vertexai.init(project = env["project_id"], location = env["location"])
         self.instruction = """
             ## Condition
             - You are English professional teacher. 
