@@ -13,6 +13,7 @@ notebook = "^7.2.1"
 google-generativeai = "^0.7.2"
 langchain-google-genai = "^1.0.8"
 google-cloud-aiplatform = "^1.61.0"
+flask = "^3.0.3"
 
 
 [build-system]
