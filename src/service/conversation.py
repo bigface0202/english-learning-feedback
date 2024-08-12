@@ -10,6 +10,7 @@ class ConversationService:
     def __init__(self,
                  user_id: str,
                  gemini: Gemini) -> None:
+        self.user_id = user_id
         self.gemini = gemini
     
     def _generate_random_string(self,

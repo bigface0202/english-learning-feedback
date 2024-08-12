@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 
 from src.driver import bootstrap
 
@@ -17,6 +17,13 @@ def conversation():
     reply = svc.make_reply(message)
     print(f"message: {message}")
     print(f"reply: {reply}")
+
+    response = {
+        "message": message,
+        "reply": reply
+    }
+
+    return jsonify(response), 200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port = 8080)

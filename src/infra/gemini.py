@@ -1,5 +1,6 @@
 import vertexai
 import json
+import re
 from typing import List
 from vertexai.generative_models import GenerativeModel, Part, SafetySetting, FinishReason
 
@@ -27,7 +28,7 @@ class Gemini:
             ),
         ]
         # TODO: 環境変数の埋め込み
-        with open("../environments/env.json") as f:
+        with open("environments/env.json") as f:
             env = json.load(f)
         vertexai.init(project = env["project_id"], location = env["location"])
         self.instruction = """
@@ -65,6 +66,6 @@ class Gemini:
             stream=False,
         )
 
-        response_str = response.candidates[0].content.parts[0]
+        response_str = response.candidates[0].content.parts[0].text
 
         return response_str
