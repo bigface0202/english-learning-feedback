@@ -1,8 +1,7 @@
 import vertexai
 import json
-import re
 from typing import List
-from vertexai.generative_models import GenerativeModel, Part, SafetySetting, FinishReason
+from vertexai.generative_models import GenerativeModel, SafetySetting
 
 from src.models.message import Message
 

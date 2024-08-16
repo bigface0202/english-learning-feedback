@@ -25,3 +25,5 @@
 - [x] Check VertexAI Gemini with system instructions
 - [ ] Check LangChain Gemini
 - [x] High-level architecture
+- [x] Check Gemini opearation as REST API
+- [x] Implement recording and uploading audio file through Flutter
