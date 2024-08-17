@@ -22,5 +22,9 @@ def conversation():
 
     return jsonify(response), 200
 
+@app.route("/")
+def read_root():
+    return {"message": "Health Check OK"}, 200
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port = 8080)

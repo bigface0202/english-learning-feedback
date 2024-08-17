@@ -1,5 +1,5 @@
 import vertexai
-import json
+import os
 from typing import List
 from vertexai.generative_models import GenerativeModel, SafetySetting
 
@@ -26,10 +26,7 @@ class Gemini:
                 threshold=SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
             ),
         ]
-        # TODO: 環境変数の埋め込み
-        with open("environments/env.json") as f:
-            env = json.load(f)
-        vertexai.init(project = env["project_id"], location = env["location"])
+        vertexai.init(project = os.environ["PROJECT_ID"], location = os.environ["LOCATION"])
         self.instruction = """
             ## Condition
             - You are English professional teacher. 
