@@ -4,8 +4,8 @@ class SpeechToText:
     def __init__(self) -> None:
         self.client = speech.SpeechClient()
         self.config = speech.RecognitionConfig(
-            encoding = speech.RecognitionConfig.AudioEncoding.LINEAR16,
-            sample_rate_hertz = 16000,
+            encoding = speech.RecognitionConfig.AudioEncoding.FLAC,
+            sample_rate_hertz = 44100,
             language_code = "en-US",
         )
 

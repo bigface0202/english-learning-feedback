@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
 
 from src.driver import bootstrap
 
@@ -8,8 +8,9 @@ conv_svc, trns_svc = bootstrap()
 
 @app.route("/conversation", methods = ["POST"])
 def conversation():
-    #TODO: Extract human message from POST request
-    message = trns_svc.make_transcription("gs://cloud-samples-data/speech/brooklyn_bridge.raw")
+    data:object = request.get_json()
+    gcs_uri:str = data.get('gcs_uri')
+    message = trns_svc.make_transcription(gcs_uri)
     reply = conv_svc.make_reply(message)
     print(f"message: {message}")
     print(f"reply: {reply}")
