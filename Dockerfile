@@ -2,12 +2,12 @@ FROM python:3.10-slim
 
 ENV PYTHONUNBUFFERED True
 ENV PYTHONDONTWRITEBYTECODE True
-# ENV PYTHONPATH="${PYTHONPATH}:/app"
+ENV PYTHONPATH="${PYTHONPATH}:/app"
 
 # Add poetry config
 ENV POETRY_VERSION=1.8.2
 ENV POETRY_HOME=/opt/poetry
-ENV POETRY_NO_INTERACTION=1W
+ENV POETRY_NO_INTERACTION=1
 ENV PATH="$POETRY_HOME/bin:$PATH"
 
 ## Add environment value for application
@@ -28,4 +28,4 @@ COPY . ./
 RUN poetry config virtualenvs.create false \
     && poetry install --no-dev
 
-CMD ["poetry", "run", "python", "src/main.py"]
+CMD ["python", "src/main.py"]
