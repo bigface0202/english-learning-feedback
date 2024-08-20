@@ -16,6 +16,7 @@ google-cloud-aiplatform = "^1.61.0"
 flask = "^3.0.3"
 datetime = "^5.5"
 regex = "^2024.7.24"
+pydub = "^0.25.1"
 
 
 [build-system]
