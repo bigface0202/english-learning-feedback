@@ -11,8 +11,9 @@
 ## Tech Stack
 
 - Python
-- Dart?
-- Flutter?
+- ~~Dart?~~
+- ~~Flutter?~~
+- Vue.js
 - Cloud Run
 - Speech to Text
 - Gemini
@@ -27,3 +28,18 @@
 - [x] High-level architecture
 - [x] Check Gemini opearation as REST API
 - [x] Implement recording and uploading audio file through Flutter
+
+### Backend
+
+- [x] Gemini text service
+- [ ] Gemini audio service
+- [ ] Text parse function
+- [ ] Analyze text data
+- [ ] Storing DB
+- [ ] Authentication
+
+### Frontend
+
+- [ ] Upload audio file
+- [ ] Visualize the data
+- [ ] Authentication
