@@ -2,14 +2,14 @@ import string
 import random
 from datetime import datetime
 
-from src.infra.gemini import Gemini
+from src.infra.gemini import TextGemini
 from src.models.message import Message
 from src.models.conversation import Conversation
 
 class ConversationService:
     def __init__(self,
                  user_id: str,
-                 gemini: Gemini) -> None:
+                 gemini: TextGemini) -> None:
         self.user_id = user_id
         self.gemini = gemini
     
@@ -39,7 +39,7 @@ class ConversationService:
         self.gemini.conversation_history = latest_conversation.messages
 
         # Generate next response from Gemini
-        response = self.gemini.generate_response(message)
+        response = self.gemini.generate(message)
 
         # Add new human message
         human_msg = Message(

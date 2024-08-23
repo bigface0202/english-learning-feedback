@@ -1,13 +1,13 @@
 import vertexai
 import os
 from typing import List
-from vertexai.generative_models import GenerativeModel, SafetySetting
+from vertexai.generative_models import GenerativeModel, SafetySetting, Part
+from abc import ABC, abstractmethod
 
 from src.models.message import Message
 
-class Gemini:
-    def __init__(self,
-                 conversation_history: List[Message] = []) -> None:
+class Gemini(ABC):
+    def __init__(self) -> None:
         self.safety_settings = [
             SafetySetting(
                 category=SafetySetting.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
@@ -27,41 +27,66 @@ class Gemini:
             ),
         ]
         vertexai.init(project = os.environ["PROJECT_ID"], location = os.environ["LOCATION"])
-        self.instruction = """
-            ## Condition
-            - You are English professional teacher. 
-            - Point out uncorrect word and grammer.
-            - Generate three to five recommended useful phrase instead of unnatural tone.
-            """
         self.generation_config = {
             "max_output_tokens": 8192,
             "temperature": 1,
             "top_p": 0.95,
         }
+        self.model = GenerativeModel("gemini-1.5-flash-001")
+
+    @abstractmethod
+    def generate(self, *args, **kwargs):
+        pass
+
+class TextGemini(Gemini):
+    def __init__(self,
+                 conversation_history: List[Message] = []) -> None:
+        super().__init__()
         self.conversation_history = conversation_history
-        self.model = GenerativeModel(
-            "gemini-1.5-flash-001",
-            system_instruction = [
-                self.instruction
-                ]
-        )
 
-
-    def generate_response(self, 
-                          human_message: str) -> str:
-        # Create prompt
+    def generate(self, human_message: str) -> str:
         last_5_messages = self.conversation_history[-6:]
         input = "".join(f"{message.variant}: {message.text}" for message in last_5_messages) + f"human: {human_message}"
+        instruction = """
+        ## Condition
+        You are English professional teacher. 
+        Point out uncorrect word and grammer.
+        Generate three to five recommended useful phrase instead of unnatural tone.
+        """
 
         response = self.model.generate_content(
             [
+                instruction,
                 input
             ],
             generation_config=self.generation_config,
             safety_settings=self.safety_settings,
             stream=False,
+        
         )
 
-        response_str = response.candidates[0].content.parts[0].text
+        return response.text
 
-        return response_str
+class AudioGemini(Gemini):
+    def generate(self, audio_file_uri: str) -> str:
+        instruction = """
+        ## Condition
+        Can you transcribe this English conversation class, in the format of timecode, speaker, caption.
+        Speakers are teacher, who is woman and high toned voice, and student, who is man and low toned voice.
+        Please follow this format:
+        00:00 Teacher Hello.
+        00:02 Student Hi.
+        ...
+        """
+        audio_file = Part.from_uri(audio_file_uri, mime_type = "audio/mpeg")
+        response = self.model.generate_content(
+            [
+                audio_file,
+                instruction,
+            ],
+            generation_config = self.generation_config,
+            safety_settings = self.safety_settings,
+            stream = False,
+        )
+
+        return response.text

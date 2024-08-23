@@ -4,19 +4,31 @@ from src.driver import bootstrap
 
 app = Flask(__name__)
 
-conv_svc, trns_svc = bootstrap()
+conv_svc, audio_svc = bootstrap()
 
 @app.route("/conversation", methods = ["POST"])
 def conversation():
     data:object = request.get_json()
-    gcs_uri:str = data.get('gcs_uri')
-    message = trns_svc.make_transcription(gcs_uri)
-    reply = conv_svc.make_reply(message)
-    print(f"message: {message}")
+    human_message:str = data.get('human_message')
+    reply = conv_svc.make_reply(human_message)
+    print(f"message: {human_message}")
     print(f"reply: {reply}")
 
     response = {
-        "message": message,
+        "message": human_message,
+        "reply": reply
+    }
+
+    return jsonify(response), 200
+
+@app.route("/audio", methods = ["POST"])
+def audio():
+    data:object = request.get_json()
+    gcs_uri:str = data.get('gcs_uri')
+    reply = audio_svc.make_reply(gcs_uri)
+    print(f"reply: {reply}")
+
+    response = {
         "reply": reply
     }
 

@@ -1,22 +1,21 @@
 from typing import Tuple
 
-from src.infra.gemini import Gemini
-from src.infra.s2p import SpeechToText
+from src.infra.gemini import TextGemini, AudioGemini
 from src.service.conversation import ConversationService
-from src.service.transcription import TranscriptionService
+from src.service.audio import AudioService
 
-def bootstrap() -> Tuple[ConversationService, TranscriptionService]:
-    gemini = Gemini()
-    s2p = SpeechToText()
+def bootstrap() -> tuple[ConversationService, AudioService]:
+    text_gemini = TextGemini()
+    audio_gemini = AudioGemini()
     
     conversation_service = ConversationService(
         user_id = None,
-        gemini = gemini
+        gemini = text_gemini,
     )
 
-    transcription_servce = TranscriptionService(
+    audio_service = AudioService(
         user_id = None,
-        s2p = s2p
+        gemini = audio_gemini,
     )
 
-    return conversation_service, transcription_servce
+    return conversation_service, audio_service
