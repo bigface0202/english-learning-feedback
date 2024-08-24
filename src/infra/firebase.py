@@ -1,9 +1,12 @@
 import os
-from google.cloud import firestore
+import firebase_admin
+from firebase_admin import credentials, firestore
 
 class FirebaseAdapter:
     def __init__(self) -> None:
-        self.db = firestore.Client(project=os.environ["PROJECT_ID"], database = "english-learning-feedback")
+        cred = credentials.ApplicationDefault()
+        firebase_admin.initialize_app(cred)
+        self.db = firestore.client()
 
     def set_data(self, collection_name: str, document_id: str, data: dict) -> None:
         doc_ref = self.db.collection(collection_name).document(document_id)
