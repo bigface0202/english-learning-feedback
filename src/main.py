@@ -4,7 +4,7 @@ from src.driver import bootstrap
 
 app = Flask(__name__)
 
-conv_svc, audio_svc = bootstrap()
+conv_svc, trn_svc = bootstrap()
 
 @app.route("/conversation", methods = ["POST"])
 def conversation():
@@ -25,14 +25,9 @@ def conversation():
 def audio():
     data:object = request.get_json()
     gcs_uri:str = data.get('gcs_uri')
-    reply = audio_svc.make_reply(gcs_uri)
-    print(f"reply: {reply}")
+    trn_svc.transcribe(gcs_uri)
 
-    response = {
-        "reply": reply
-    }
-
-    return jsonify(response), 200
+    return {"message": "Audio is transcribed"}, 200
 
 @app.route("/")
 def read_root():

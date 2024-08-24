@@ -44,7 +44,7 @@ class ConversationService:
         # Add new human message
         human_msg = Message(
             text = message,
-            variant = "human",
+            speaker = "human",
             timestamp = datetime.now().isoformat()
         )
         latest_conversation.messages.append(human_msg)
@@ -52,7 +52,7 @@ class ConversationService:
         # Add new Gemini message
         system_msg = Message(
             text = message,
-            variant = "system",
+            speaker = "system",
             timestamp = datetime.now().isoformat()
         )
         latest_conversation.messages.append(system_msg)

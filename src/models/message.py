@@ -1,8 +1,8 @@
 class Message:
     def __init__(self,
                  text: str,
-                 variant: str,
+                 speaker: str,
                  timestamp: str) -> None:
         self.text = text
-        self.variant = variant
+        self.speaker = speaker
         self.timestamp = timestamp

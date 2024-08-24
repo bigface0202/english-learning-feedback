@@ -1,7 +1,7 @@
 import vertexai
 import os
 from typing import List
-from vertexai.generative_models import GenerativeModel, SafetySetting, Part
+from vertexai.generative_models import GenerativeModel, SafetySetting, Part, GenerationResponse
 from abc import ABC, abstractmethod
 
 from src.models.message import Message
@@ -44,9 +44,9 @@ class TextGemini(Gemini):
         super().__init__()
         self.conversation_history = conversation_history
 
-    def generate(self, human_message: str) -> str:
+    def generate(self, human_message: str) -> GenerationResponse:
         last_5_messages = self.conversation_history[-6:]
-        input = "".join(f"{message.variant}: {message.text}" for message in last_5_messages) + f"human: {human_message}"
+        input = "".join(f"{message.speaker}: {message.text}" for message in last_5_messages) + f"human: {human_message}"
         instruction = """
         ## Condition
         You are English professional teacher. 
@@ -65,10 +65,10 @@ class TextGemini(Gemini):
         
         )
 
-        return response.text
+        return response
 
 class AudioGemini(Gemini):
-    def generate(self, audio_file_uri: str) -> str:
+    def generate(self, audio_file_uri: str) -> GenerationResponse:
         instruction = """
         ## Condition
         Can you transcribe this English conversation class, in the format of timecode, speaker, caption.
@@ -89,4 +89,4 @@ class AudioGemini(Gemini):
             stream = False,
         )
 
-        return response.text
+        return response
