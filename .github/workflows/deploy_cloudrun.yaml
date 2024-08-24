@@ -1,0 +1,46 @@
+name: Deploy CloudRun
+on:
+  release:
+    types: [published]
+env:
+  REGISTRY: asia-northeast1-docker.pkg.dev
+  PROJECT_ID: ksst-genai-app
+  PROJECT_NUM: 329656168601
+  SERVICE_NAME: english-learning-feedback
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: 'projects/{{ env.PROJECT_NUM }}/locations/global/workloadIdentityPools/github-actions-pool/providers/github'
+          service_account: 'english-lerning-feedback-cicd@${{ env.PROJECT_ID }}.iam.gserviceaccount.com'
+      
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+        with:
+          version: '>= 379.0.0'
+
+      - name: Configure Artifact Registry
+        run: gcloud auth configure-docker ${{ env.REGISTRY }}
+
+      - name: Build, tag and push container
+        id: build-image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.event.release.tag_name }}
+
+      - name: Deploy
+        run: gcloud run deploy ${{ env.SERVICE_NAME }} --image ${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.event.release.tag_name }} --platform managed --region asia-northeast1 --allow-unauthenticated --max-instances 1 --min-instances 0 --memory 512Mi
