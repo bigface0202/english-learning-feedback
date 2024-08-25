@@ -19,7 +19,6 @@ def bootstrap() -> tuple[ConversationService, TranscriptionService]:
     )
 
     audio_service = TranscriptionService(
-        user_id = None,
         transcription_repo = transcription_repo,
         gemini = audio_gemini,
     )

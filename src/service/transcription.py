@@ -1,5 +1,6 @@
 import string
 import random
+import datetime
 
 from src.infra.gemini import AudioGemini
 from src.models.transcription import Transcription
@@ -8,10 +9,8 @@ from src.service import transform_data
 
 class TranscriptionService:
     def __init__(self,
-                 user_id: str,
                  transcription_repo: TranscriptionRepository,
                  gemini: AudioGemini) -> None:
-        self.user_id = user_id
         self.transcriptin_repo = transcription_repo
         self.gemini = gemini
     
@@ -22,15 +21,18 @@ class TranscriptionService:
         return random_string
     
     def transcribe(self, 
-                   message: str) -> None:   
-        response = self.gemini.generate(message)
+                   gcs_uri: str,
+                   user_uid: str) -> None:   
+        response = self.gemini.generate(gcs_uri)
         messages = transform_data.parse_conversation_data(response.text)
         transcription = Transcription(
-            id = self._generate_random_string(10),
             transcription_id = self._generate_random_string(10),
-            user_id = self.user_id,
             model = "gemini-1.5-flash-001",
-            messages = messages
+            messages = messages,
+            created_at = datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(hours=9)))
         )
 
-        self.transcriptin_repo.persist(transcription)
+        self.transcriptin_repo.persist(
+            user_uid = user_uid,
+            transcription = transcription
+        )

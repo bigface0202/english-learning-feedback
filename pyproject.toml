@@ -18,6 +18,7 @@ datetime = "^5.5"
 regex = "^2024.7.24"
 pydub = "^0.25.1"
 firebase-admin = "^6.5.0"
+flask-cors = "^4.0.1"
 
 
 [build-system]

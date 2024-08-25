@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 from src.driver import bootstrap
 
 app = Flask(__name__)
+CORS(app)
 
 conv_svc, trn_svc = bootstrap()
 
@@ -24,8 +26,9 @@ def conversation():
 @app.route("/audio", methods = ["POST"])
 def audio():
     data:object = request.get_json()
-    gcs_uri:str = data.get('gcs_uri')
-    trn_svc.transcribe(gcs_uri)
+    gcs_uri:str = data.get("gcs_uri")
+    user_uid:str = data.get("user_uid")
+    trn_svc.transcribe(gcs_uri, user_uid)
 
     return {"message": "Audio is transcribed"}, 200
 
