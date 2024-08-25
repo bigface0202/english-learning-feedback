@@ -11,6 +11,7 @@ class TranscriptionRepository:
             document_id = transcription.transcription_id,
             data = {
                 "model": transcription.model,
+                "audio_file": transcription.audio_file,
                 "messages": [
                     {
                         "text": m.text,

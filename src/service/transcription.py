@@ -28,6 +28,7 @@ class TranscriptionService:
         transcription = Transcription(
             transcription_id = self._generate_random_string(10),
             model = "gemini-1.5-flash-001",
+            audio_file = gcs_uri, 
             messages = messages,
             created_at = datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(hours=9)))
         )

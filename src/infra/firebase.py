@@ -9,7 +9,7 @@ class FirebaseAdapter:
         self.db = firestore.client()
 
     def set_data(self, user_uid: str, collection_name: str, document_id: str, data: dict) -> None:
-        doc_ref = self.db.collection("user").document(user_uid).collection(collection_name).document(document_id)
+        doc_ref = self.db.collection("users").document(user_uid).collection(collection_name).document(document_id)
         doc_ref.set(data)
 
     def get_data(self, collection_name: str, document_id: str) -> dict:
