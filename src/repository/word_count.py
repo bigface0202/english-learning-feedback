@@ -7,7 +7,7 @@ class WordCountRepository:
     def persist(self, user_uid:str, word_count: WordCount) -> None:
         self.db.set_data(
             user_uid = user_uid,
-            collection_name = "word_count",
+            collection_name = "word_counts",
             document_id = word_count.word_count_id,
             data = {
                 "transcription_id": word_count.transcription_id,
