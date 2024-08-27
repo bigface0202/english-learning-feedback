@@ -24,8 +24,8 @@ def count_words_by_speaker(conversation:List[Message]) -> tuple[object, object]:
     student_word_count = {}
 
     for entry in conversation:
-        speaker = entry["speaker"]
-        message = entry["message"]
+        speaker = entry.speaker
+        message = entry.text
 
         message = re.sub(r'[?.,!]', '', message)
         words = message.split()

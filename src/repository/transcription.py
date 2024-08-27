@@ -17,7 +17,7 @@ class TranscriptionRepository:
                         "text": m.text,
                         "speaker": m.speaker,
                         "timestamp": m.timestamp,
-                    } for m in transcription.messags
+                    } for m in transcription.messages
                 ],
                 "created_at": transcription.created_at,
             }

@@ -12,5 +12,5 @@ class Transcription:
         self.transcription_id = transcription_id
         self.model = model
         self.audio_file = audio_file
-        self.messags = messages
+        self.messages = messages
         self.created_at = created_at
