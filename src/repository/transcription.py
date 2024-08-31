@@ -20,5 +20,7 @@ class TranscriptionRepository:
                     } for m in transcription.messages
                 ],
                 "created_at": transcription.created_at,
+                "lesson_date": transcription.lesson_date,
+                "note": transcription.note,
             }
         )

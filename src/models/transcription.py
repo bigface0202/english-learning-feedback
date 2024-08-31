@@ -7,6 +7,8 @@ class Transcription:
                  model: str,
                  audio_file:str,
                  created_at: str,
+                 lesson_date: str,
+                 note: str,
                  messages: List[Message] = [],
                  ) -> None:
         self.transcription_id = transcription_id
@@ -14,3 +16,5 @@ class Transcription:
         self.audio_file = audio_file
         self.messages = messages
         self.created_at = created_at
+        self.lesson_date = lesson_date
+        self.note = note

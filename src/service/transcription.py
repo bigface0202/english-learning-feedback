@@ -26,18 +26,26 @@ class TranscriptionService:
     
     def transcribe(self, 
                    gcs_uri: str,
-                   user_uid: str) -> None:   
+                   user_uid: str,
+                   lesson_date: str,
+                   note: str,) -> None:   
         response = self.gemini.generate(gcs_uri)
         messages = transform_data.parse_conversation_data(response.text)
         teacher_word_count, student_word_count = transform_data.count_words_by_speaker(
             conversation = messages,
             )
+        
+        # Cnvert string to timestamp
+        formatted_lesson_date = datetime.datetime.strptime(lesson_date, "%a %b %d %Y")
+
         transcription = Transcription(
             transcription_id = self._generate_random_string(10),
             model = "gemini-1.5-flash-001",
             audio_file = gcs_uri, 
             messages = messages,
             created_at = datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(hours=9))),
+            lesson_date = formatted_lesson_date,
+            note = note,
             )
 
         word_count = WordCount(
@@ -46,6 +54,7 @@ class TranscriptionService:
             teacher_word_count = teacher_word_count,
             student_word_count = student_word_count,
             created_at = datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(hours=9))),
+            lesson_date = formatted_lesson_date
             )
 
         self.transcriptin_repo.persist(

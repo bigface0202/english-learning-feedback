@@ -14,5 +14,6 @@ class WordCountRepository:
                 "teacher_word_count": word_count.teacher_word_count,
                 "student_word_count": word_count.student_word_count,
                 "created_at": word_count.created_at,
+                "lesson_date": word_count.lesson_date,
             }
         )
