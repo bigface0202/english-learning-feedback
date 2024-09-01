@@ -42,6 +42,7 @@ class SuggestionService:
             created_at = datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(hours=9))),
             transcription_id = transcription_id,
             model = "gemini-1.5-flash-001",
+            lesson_date = transcription["lesson_date"],
             suggestion = response.text
         )
 

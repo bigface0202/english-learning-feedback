@@ -15,5 +15,6 @@ class SuggestionRepository:
                 "created_at": suggestion.created_at,
                 "model": suggestion.model,
                 "suggestion": suggestion.suggestion,
+                "lesson_date": suggestion.lesson_date,
             }
         )
