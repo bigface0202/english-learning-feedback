@@ -12,8 +12,8 @@ class FirebaseAdapter:
         doc_ref = self.db.collection("users").document(user_uid).collection(collection_name).document(document_id)
         doc_ref.set(data)
 
-    def get_data(self, collection_name: str, document_id: str) -> dict:
-        doc_ref = self.db.collection(collection_name).document(document_id)
+    def get_data(self, user_uid: str, collection_name: str, document_id: str) -> dict:
+        doc_ref = self.db.collection("users").document(user_uid).collection(collection_name).document(document_id)
         doc = doc_ref.get()
         if doc.exists:
             return doc.to_dict()

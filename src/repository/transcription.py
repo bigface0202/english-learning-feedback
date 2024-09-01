@@ -1,7 +1,8 @@
 from src.models.transcription import Transcription
+from src.infra.firebase import FirebaseAdapter
 
 class TranscriptionRepository:
-    def __init__(self, db) -> None:
+    def __init__(self, db:FirebaseAdapter) -> None:
         self.db = db
 
     def persist(self, user_uid:str, transcription: Transcription) -> None:
@@ -24,3 +25,12 @@ class TranscriptionRepository:
                 "note": transcription.note,
             }
         )
+    
+    def extract(self, user_uid:str, transcription_id: str) -> Transcription:
+        transcription:Transcription = self.db.get_data(
+            user_uid = user_uid,
+            collection_name = "transcriptions",
+            document_id = transcription_id,
+        )
+
+        return transcription

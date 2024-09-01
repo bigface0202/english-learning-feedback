@@ -6,22 +6,19 @@ from src.driver import bootstrap
 app = Flask(__name__)
 CORS(app)
 
-conv_svc, trn_svc = bootstrap()
+sgs_svc, trn_svc = bootstrap()
 
-@app.route("/conversation", methods = ["POST"])
+@app.route("/suggestion", methods = ["POST"])
 def conversation():
     data:object = request.get_json()
-    human_message:str = data.get('human_message')
-    reply = conv_svc.make_reply(human_message)
-    print(f"message: {human_message}")
-    print(f"reply: {reply}")
+    user_uid:str = data.get("user_uid")
+    trasncription_id:str = data.get("transcription_id")
+    sgs_svc.make_suggestion(
+        user_uid = user_uid,
+        trasncription_id = trasncription_id
+    )
 
-    response = {
-        "message": human_message,
-        "reply": reply
-    }
-
-    return jsonify(response), 200
+    return {"message": "Suggestion is created"}, 200
 
 @app.route("/audio", methods = ["POST"])
 def audio():

@@ -2,6 +2,7 @@ import re
 from typing import List
 
 from src.models.message import Message
+from src.models.transcription import Transcription
 
 def parse_conversation_data(text:str) ->List[Message]:
     conversation = []
@@ -43,3 +44,10 @@ def count_words_by_speaker(conversation:List[Message]) -> tuple[object, object]:
                 else:
                     student_word_count[word] = 1
     return teacher_word_count, student_word_count
+
+def create_conversation_prompt(transcription:Transcription) -> str:
+    messages:List[Message] = transcription.messages
+    prompt_parts = [f"{message.timestamp} {message.speaker}:{message.text}\n" for message in messages]
+    prompt = "".join(prompt_parts)
+
+    return prompt

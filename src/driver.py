@@ -2,12 +2,13 @@ from typing import Tuple
 
 from src.infra.gemini import TextGemini, AudioGemini
 from src.infra.firebase import FirebaseAdapter
-from src.service.conversation import ConversationService
+from src.service.suggestion import SuggestionService
 from src.service.transcription import TranscriptionService
 from src.repository.transcription import TranscriptionRepository
 from src.repository.word_count import WordCountRepository
+from src.repository.suggestion import SuggestionRepository
 
-def bootstrap() -> Tuple[ConversationService, TranscriptionService]:
+def bootstrap() -> Tuple[SuggestionService, TranscriptionService]:
     text_gemini = TextGemini()
     audio_gemini = AudioGemini()
     db = FirebaseAdapter()
@@ -20,8 +21,13 @@ def bootstrap() -> Tuple[ConversationService, TranscriptionService]:
         db = db,
         )
     
-    conversation_service = ConversationService(
-        user_id = None,
+    suggestion_repo = SuggestionRepository(
+        db = db,
+    )
+    
+    suggestion_service = SuggestionService(
+        transcription_repo = transcription_repo,
+        suggestion_repo = suggestion_repo,
         gemini = text_gemini,
     )
 
@@ -31,4 +37,4 @@ def bootstrap() -> Tuple[ConversationService, TranscriptionService]:
         gemini = audio_gemini,
     )
 
-    return conversation_service, audio_service
+    return suggestion_service, audio_service
