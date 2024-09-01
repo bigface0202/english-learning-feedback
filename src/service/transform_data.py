@@ -46,8 +46,8 @@ def count_words_by_speaker(conversation:List[Message]) -> tuple[object, object]:
     return teacher_word_count, student_word_count
 
 def create_conversation_prompt(transcription:Transcription) -> str:
-    messages:List[Message] = transcription.messages
-    prompt_parts = [f"{message.timestamp} {message.speaker}:{message.text}\n" for message in messages]
+    messages:List[Message] = transcription["messages"]
+    prompt_parts = [f"{message['timestamp']} {message['speaker']}:{message['text']}\n" for message in messages]
     prompt = "".join(prompt_parts)
 
     return prompt
