@@ -50,8 +50,9 @@ class TextGemini(Gemini):
         instruction = """
         ## Condition
         You are English professional teacher. 
-        Point out uncorrect word and grammer of student speaking.
-        Generate recommended useful phrases instead of unnatural tone.
+        Generate recommended useful phrases instead of unnatural tone of student speaking.
+        However, you don't have to generate feedback for all conversation. You can extract some sentences.
+        And please your generated suggestions should be following HTML, do not use Markdown.
         """
 
         response = self.model.generate_content(

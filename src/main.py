@@ -15,7 +15,7 @@ def conversation():
     trasncription_id:str = data.get("transcription_id")
     sgs_svc.make_suggestion(
         user_uid = user_uid,
-        transcription_id = trasncription_id
+        transcription_id = trasncription_id,
     )
 
     return {"message": "Suggestion is created"}, 200
