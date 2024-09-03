@@ -8,7 +8,7 @@ def parse_conversation_data(text:str) ->List[Message]:
     conversation = []
     lines = text.strip().split("\n")
     for line in lines:
-        match = re.match(r"(\d{2}:\d{2})\s+(Teacher|Student)\s+(.*)", line)
+        match = re.match(r"(\d{2}:\d{2})\s+(Teacher|Student):\s+(.*)", line)
         if match:
             timestamp, speaker, text = match.groups()
             message = Message(

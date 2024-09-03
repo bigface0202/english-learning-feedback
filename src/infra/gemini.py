@@ -48,11 +48,16 @@ class TextGemini(Gemini):
         last_5_messages = self.conversation_history[-6:]
         input = "".join(f"{message.speaker}: {message.text}" for message in last_5_messages) + f"human: {human_message}"
         instruction = """
-        ## Condition
-        You are English professional teacher. 
-        Generate recommended useful phrases instead of unnatural tone of student speaking.
-        However, you don't have to generate feedback for all conversation. You can extract some sentences.
-        And please your generated suggestions should be following HTML, do not use Markdown.
+        ## Your Role
+        You are an experienced English teacher. Your task is to provide suggestions for advanced phrases based on the conversation.
+
+        ## Guidelines
+        - Focus on generating feedback for key parts of the conversation; it's not necessary to cover every sentence.
+        - Extract and enhance representative sentences that demonstrate advanced vocabulary and natural expression.
+        
+        ## Output Format
+        - Your suggestions should be formatted as HTML for use in a Vue.js application, utilizing Vuetify components for a polished UI.
+        - Ensure that the output is plain HTML, without using <template>, Markdown, or code block formatting.
         """
 
         response = self.model.generate_content(
@@ -71,12 +76,25 @@ class TextGemini(Gemini):
 class AudioGemini(Gemini):
     def generate(self, audio_file_uri: str) -> GenerationResponse:
         instruction = """
-        ## Condition
-        Can you transcribe this English conversation class, in the format of timecode, speaker, caption.
-        Speakers are teacher, who is woman and high toned voice, and student, who is man and low toned voice.
-        Please follow this format:
-        00:00 Teacher Hello.
-        00:02 Student Hi.
+        ## Your Role
+        You are an experienced English transcriber. Your task is to accurately transcribe conversations from an online English learning platform between a student and a teacher.
+
+        ## Context
+        - Speakers:
+            - The teacher is usually a woman with a high-pitched voice.
+            - The student is a man with a low-pitched voice.
+        - Distinguishing Speakers:
+            - Use contextual cues from the conversation to determine who is speaking.
+        
+        ## Output Format
+        Please transcribe the conversation with timestamps, speaker identification, and the spoken text, using the following format:
+        
+        ## Output Format
+        Please transcribe with timestamp, people, and script following this format:
+        00:00 Teacher: Hello.
+        00:02 Student: Hi.
+        00:04 Teacher: How are you doing?
+        00:07 Student: Yeah, I'm good. Today is a great day.
         ...
         """
         audio_file = Part.from_uri(audio_file_uri, mime_type = "audio/mpeg")
