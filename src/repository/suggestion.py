@@ -14,7 +14,23 @@ class SuggestionRepository:
                 "transcription_id": suggestion.transcription_id,
                 "created_at": suggestion.created_at,
                 "model": suggestion.model,
-                "suggestion": suggestion.suggestion,
+                "suggestion_details": [
+                    {
+                        "topic": s.topic,
+                        "duration": {
+                            "start": s.duration.start,
+                            "end": s.duration.end,
+                        },
+                        "suggestion_items": [
+                            {
+                                "original_sentence": item.original_sentence,
+                                "improved_sentence": item.improved_sentence,
+                                "reasoning": item.reasoning
+                            }   
+                            for item in s.suggestion_items
+                        ] 
+                    } for s in suggestion.suggestion_details
+                ],
                 "lesson_date": suggestion.lesson_date,
             }
         )

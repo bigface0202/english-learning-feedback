@@ -1,8 +1,12 @@
 import re
+import json
 from typing import List
 
 from src.models.message import Message
+from src.models.suggestion_detail import SuggestionDetail
 from src.models.transcription import Transcription
+from src.models.suggested_item import SuggetedItem
+from src.models.duration import Duration
 
 def parse_conversation_data(text:str) ->List[Message]:
     conversation = []
@@ -51,3 +55,29 @@ def create_conversation_prompt(transcription:Transcription) -> str:
     prompt = "".join(prompt_parts)
 
     return prompt
+
+def parse_suggestions(raw_suggestion:str) -> List[SuggestionDetail]:
+    suggestion_details = []
+    
+    data = json.loads(raw_suggestion)
+
+    for item in data:
+        suggestion_detail = SuggestionDetail(
+            topic = item["topic"],
+            duration = Duration(
+                start = item["duration"]["start"],
+                end = item["duration"]["end"],
+            ),
+            suggestion_items = [
+                SuggetedItem(
+                    original_sentence = s["original_sentence"],
+                    improved_sentence = s["improved_sentence"],
+                    reasoning = s["reasoning"]
+                )
+                for s in item["suggestions"]
+            ]
+        )
+        suggestion_details.append(suggestion_detail)
+
+    return suggestion_details
+

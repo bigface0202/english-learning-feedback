@@ -54,10 +54,39 @@ class TextGemini(Gemini):
         ## Guidelines
         - Focus on generating feedback for key parts of the conversation; it's not necessary to cover every sentence.
         - Extract and enhance representative sentences that demonstrate advanced vocabulary and natural expression.
-        
+        - Ignore interjections or filler words like "Uh," "Um," "Ah," "Er," and other similar sounds during the suggestion process.
+        - Ensure that the suggestions are concise but clear.
+
+        ## Formatting Instructions
+        - Output the suggestions strictly as **valid JSON**.
+        - Do not use any extra characters like backticks, quotation marks for keys, or Markdown formatting.
+        - Ensure that the JSON keys and values are properly enclosed in double quotes.
+        - Avoid trailing commas, and make sure every comma is correctly placed.
+
         ## Output Format
-        - Your suggestions should be formatted as HTML for use in a Vue.js application, utilizing Vuetify components for a polished UI.
-        - Ensure that the output is plain HTML, without using <template>, Markdown, or code block formatting.
+        The JSON should follow this structure exactly:
+        [
+            {
+                "topic": "Introducing Yourself",
+                "duration": {
+                    "start": "0:30",
+                    "end": "1:00"
+                },
+                "suggestions": [
+                    {
+                        "original_sentence": "This is our first lesson together.",
+                        "improved_sentence": "I'm excited to begin our journey together today.",
+                        "reasoning": "The revised phrase is more engaging and personal."
+                    },
+                    {
+                        "original_sentence": "It is quite difficult to find on the map normally for the students.",
+                        "improved_sentence": "It often proves tricky for students to locate on a map.",
+                        "reasoning": "The alternative phrasing sounds more natural and concise."
+                    }
+                ]
+            },
+            ...
+        ]
         """
 
         response = self.model.generate_content(

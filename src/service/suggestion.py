@@ -36,6 +36,9 @@ class SuggestionService:
             transcription = transcription)
         
         response = self.gemini.generate(conversation_prompt)
+        suggestion_details = transform_data.parse_suggestions(
+            raw_suggestion = response.text
+        )
 
         suggestion = Suggestion(
             suggestion_id = self._generate_random_string(10),
@@ -43,7 +46,7 @@ class SuggestionService:
             transcription_id = transcription_id,
             model = "gemini-1.5-flash-001",
             lesson_date = transcription["lesson_date"],
-            suggestion = response.text
+            suggestion_details = suggestion_details
         )
 
         self.suggestion_repo.persist(
