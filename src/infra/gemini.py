@@ -68,7 +68,7 @@ class TextGemini(Gemini):
         [
             {
                 "topic": "Introducing Yourself",
-                "duration": {
+                "TimeFrame": {
                     "start": "0:30",
                     "end": "1:00"
                 },

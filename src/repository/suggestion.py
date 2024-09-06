@@ -17,9 +17,9 @@ class SuggestionRepository:
                 "suggestion_details": [
                     {
                         "topic": s.topic,
-                        "duration": {
-                            "start": s.duration.start,
-                            "end": s.duration.end,
+                        "time_frame": {
+                            "start": s.time_frame.start,
+                            "end": s.time_frame.end,
                         },
                         "suggestion_items": [
                             {

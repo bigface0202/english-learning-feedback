@@ -6,7 +6,7 @@ from src.models.message import Message
 from src.models.suggestion_detail import SuggestionDetail
 from src.models.transcription import Transcription
 from src.models.suggested_item import SuggetedItem
-from src.models.duration import Duration
+from src.models.time_frame import TimeFrame
 
 def parse_conversation_data(text:str) ->List[Message]:
     conversation = []
@@ -64,9 +64,9 @@ def parse_suggestions(raw_suggestion:str) -> List[SuggestionDetail]:
     for item in data:
         suggestion_detail = SuggestionDetail(
             topic = item["topic"],
-            duration = Duration(
-                start = item["duration"]["start"],
-                end = item["duration"]["end"],
+            time_frame = TimeFrame(
+                start = item["time_frame"]["start"],
+                end = item["time_frame"]["end"],
             ),
             suggestion_items = [
                 SuggetedItem(
