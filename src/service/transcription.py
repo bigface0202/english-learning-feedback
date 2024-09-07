@@ -28,7 +28,8 @@ class TranscriptionService:
                    gcs_uri: str,
                    user_uid: str,
                    lesson_date: str,
-                   note: str,) -> None:   
+                   note: str,
+                   download_url: str) -> None:   
         response = self.gemini.generate(gcs_uri)
         messages = transform_data.parse_conversation_data(response.text)
         teacher_word_count, student_word_count = transform_data.count_words_by_speaker(
@@ -41,7 +42,8 @@ class TranscriptionService:
         transcription = Transcription(
             transcription_id = self._generate_random_string(10),
             model = "gemini-1.5-flash-001",
-            audio_file = gcs_uri, 
+            audio_file = gcs_uri,
+            download_url = download_url,
             messages = messages,
             created_at = datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(hours=9))),
             lesson_date = formatted_lesson_date,

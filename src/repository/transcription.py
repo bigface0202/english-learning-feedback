@@ -13,6 +13,7 @@ class TranscriptionRepository:
             data = {
                 "model": transcription.model,
                 "audio_file": transcription.audio_file,
+                "download_url": transcription.download_url,
                 "messages": [
                     {
                         "text": m.text,

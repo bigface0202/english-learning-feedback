@@ -15,9 +15,9 @@
 - ~~Flutter?~~
 - Vue.js
 - Cloud Run
-- Speech to Text
+- ~~Speech to Text~~
 - Gemini
-- Firebase?
+- Firebase
 
 ## TODO
 
@@ -32,14 +32,7 @@
 ### Backend
 
 - [x] Gemini text service
-- [ ] Gemini audio service
-- [ ] Text parse function
-- [ ] Analyze text data
-- [ ] Storing DB
-- [ ] Authentication
-
-### Frontend
-
-- [ ] Upload audio file
-- [ ] Visualize the data
-- [ ] Authentication
+- [x] Gemini audio service
+- [x] Text parse function
+- [x] Analyze text data
+- [x] Storing DB

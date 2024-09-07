@@ -27,12 +27,14 @@ def audio():
     user_uid:str = data.get("user_uid")
     lesson_date:str = data.get("lesson_date")
     note:str = data.get("note")
+    download_url:str = data.get("download_url")
 
     trn_svc.transcribe(
         gcs_uri = gcs_uri,
         user_uid = user_uid,
         lesson_date = lesson_date,
         note = note,
+        download_url = download_url,
     )
 
     return {"message": "Audio is transcribed"}, 200
