@@ -62,13 +62,14 @@ class TextGemini(Gemini):
         - Do not use any extra characters like backticks, quotation marks for keys, or Markdown formatting.
         - Ensure that the JSON keys and values are properly enclosed in double quotes.
         - Avoid trailing commas, and make sure every comma is correctly placed.
+        - Your max output tokens are 8192, please consider this value to generate your suggestions.
 
         ## Output Format
         The JSON should follow this structure exactly:
         [
             {
                 "topic": "Introducing Yourself",
-                "TimeFrame": {
+                "time_frame": {
                     "start": "0:30",
                     "end": "1:00"
                 },
@@ -84,8 +85,7 @@ class TextGemini(Gemini):
                         "reasoning": "The alternative phrasing sounds more natural and concise."
                     }
                 ]
-            },
-            ...
+            }
         ]
         """
 
