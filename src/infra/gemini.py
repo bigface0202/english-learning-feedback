@@ -56,13 +56,15 @@ class TextGemini(Gemini):
         - Extract and enhance representative sentences that demonstrate advanced vocabulary and natural expression.
         - Ignore interjections or filler words like "Uh," "Um," "Ah," "Er," and other similar sounds during the suggestion process.
         - Ensure that the suggestions are concise but clear.
+        - Please output **only 10 suggestions** in total.
 
         ## Formatting Instructions
         - Output the suggestions strictly as **valid JSON**.
+            - Do not foget put comma and bracket.
+        - Your max output tokens are 8192, do not exceed the token to generate your suggestions.
         - Do not use any extra characters like backticks, quotation marks for keys, or Markdown formatting.
         - Ensure that the JSON keys and values are properly enclosed in double quotes.
         - Avoid trailing commas, and make sure every comma is correctly placed.
-        - Your max output tokens are 8192, please consider this value to generate your suggestions.
 
         ## Output Format
         The JSON should follow this structure exactly:
@@ -83,9 +85,9 @@ class TextGemini(Gemini):
                         "original_sentence": "It is quite difficult to find on the map normally for the students.",
                         "improved_sentence": "It often proves tricky for students to locate on a map.",
                         "reasoning": "The alternative phrasing sounds more natural and concise."
-                    }
-                ]
-            }
+                    },
+                ],
+            },
         ]
         """
 

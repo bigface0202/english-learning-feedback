@@ -1,5 +1,6 @@
 import re
 import json
+import sys
 from typing import List
 
 from src.models.message import Message
@@ -58,8 +59,13 @@ def create_conversation_prompt(transcription:Transcription) -> str:
 
 def parse_suggestions(raw_suggestion:str) -> List[SuggestionDetail]:
     suggestion_details = []
-    
-    data = json.loads(raw_suggestion)
+    try:
+        data = json.loads(raw_suggestion)
+    except json.JSONDecodeError as e:
+        print(f"Failed to decode JSON: {e}\n Data was {raw_suggestion}", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}\n Data was {raw_suggestion}", file=sys.stderr)
 
     for item in data:
         suggestion_detail = SuggestionDetail(
