@@ -37,12 +37,11 @@ jobs:
 
       - name: Build, tag and push container
         id: build-image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v6
         with:
           context: ./
           push: true
-          tags: |
-            asia-northeast1-docker.pkg.dev/ksst-genai-app/genai-app/english-learning-feedback:${{ github.event.release.tag_name }}
+          tags: asia-northeast1-docker.pkg.dev/ksst-genai-app/genai-app/english-learning-feedback:${{ github.event.release.tag_name }}
 
       - name: Deploy
         run: gcloud run deploy ${{ env.SERVICE_NAME }} --image asia-northeast1-docker.pkg.dev/ksst-genai-app/genai-app/english-learning-feedback:${{ github.event.release.tag_name }} --platform managed --region asia-northeast1 --allow-unauthenticated --max-instances 1 --min-instances 0 --memory 512Mi
