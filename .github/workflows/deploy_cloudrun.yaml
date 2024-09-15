@@ -41,7 +41,7 @@ jobs:
         with:
           context: ./
           push: true
-          tags: ${{ DOCKER_REGISTRY }}/${{ PROJECT_ID }}/${{ REPOSITORY }}/${{ SERVICE_NAME }}:${{ github.event.release.tag_name }}
+          tags: ${{ env.DOCKER_REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE_NAME }}:${{ github.event.release.tag_name }}
 
       - name: Deploy
-        run: gcloud run deploy ${{ env.SERVICE_NAME }} --image ${{ DOCKER_REGISTRY }}/${{ PROJECT_ID }}/${{ REPOSITORY }}/${{ SERVICE_NAME }}:${{ github.event.release.tag_name }} --platform managed --region asia-northeast1 --allow-unauthenticated --max-instances 1 --min-instances 0 --memory 512Mi
+        run: gcloud run deploy ${{ env.SERVICE_NAME }} --image ${{ env.DOCKER_REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE_NAME }}:${{ github.event.release.tag_name }} --platform managed --region asia-northeast1 --allow-unauthenticated --max-instances 1 --min-instances 0 --memory 512Mi
