@@ -15,18 +15,18 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
 
       - id: "auth"
-        name: "Authenticate to Google Cloud"
-        uses: "google-github-actions/auth@v2"
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: "projects/{{ env.PROJECT_NUM }}/locations/global/workloadIdentityPools/github-actions-pool/providers/github"
+          workload_identity_provider: "projects/{{ env.PROJECT_NUM }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
           service_account: "genai-app-cicd@${{ env.PROJECT_ID }}.iam.gserviceaccount.com"
 
-      - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v1"
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
         with:
           version: ">= 379.0.0"
 
