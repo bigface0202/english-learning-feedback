@@ -60,11 +60,11 @@ class TextGemini(Gemini):
 
         ## Formatting Instructions
         - Output the suggestions strictly as **valid JSON**.
-            - Do not foget put comma and bracket.
+            - Do not foget put comma and brackets.
+            - Avoid trailing commas, and make sure every comma is correctly placed.
+            - Ensure that the JSON keys and values are properly enclosed in double quotes.
         - Your max output tokens are 8192, do not exceed the token to generate your suggestions.
         - Do not use any extra characters like backticks, quotation marks for keys, or Markdown formatting.
-        - Ensure that the JSON keys and values are properly enclosed in double quotes.
-        - Avoid trailing commas, and make sure every comma is correctly placed.
 
         ## Output Format
         The JSON should follow this structure exactly:
