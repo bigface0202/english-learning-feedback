@@ -3,7 +3,8 @@ on:
   release:
     types: [published]
 env:
-  REGISTRY: asia-northeast1-docker.pkg.dev
+  DOCKER_REGISTRY: asia-northeast1-docker.pkg.dev
+  REPOSITORY: genai-app
   PROJECT_ID: ksst-genai-app
   PROJECT_NUMBER: 329656168601
   SERVICE_NAME: english-learning-feedback
@@ -41,7 +42,7 @@ jobs:
           context: ./
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.event.release.tag_name }}
+            ${{ env.DOCKER_REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE_NAME }}:${{ github.event.release.tag_name }}
 
       - name: Deploy
         run: gcloud run deploy ${{ env.SERVICE_NAME }} --image ${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.event.release.tag_name }} --platform managed --region asia-northeast1 --allow-unauthenticated --max-instances 1 --min-instances 0 --memory 512Mi
