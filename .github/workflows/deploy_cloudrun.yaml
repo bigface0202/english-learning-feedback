@@ -5,7 +5,7 @@ on:
 env:
   REGISTRY: asia-northeast1-docker.pkg.dev
   PROJECT_ID: ksst-genai-app
-  PROJECT_NUM: 329656168601
+  PROJECT_NUMBER: 329656168601
   SERVICE_NAME: english-learning-feedback
 
 jobs:
@@ -23,8 +23,8 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           project_id: ${{ env.PROJECT_ID }}
-          workload_identity_provider: "projects/{{ env.PROJECT_NUM }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
-          service_account: "genai-app-cicd@${{ env.PROJECT_ID }}.iam.gserviceaccount.com"
+          workload_identity_provider: projects/${{ env.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions
+          service_account: genai-app-cicd@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
