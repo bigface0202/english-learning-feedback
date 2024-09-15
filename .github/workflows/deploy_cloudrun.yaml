@@ -18,17 +18,17 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
 
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v1'
+      - id: "auth"
+        name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v2"
         with:
-          workload_identity_provider: 'projects/{{ env.PROJECT_NUM }}/locations/global/workloadIdentityPools/github-actions-pool/providers/github'
-          service_account: 'english-lerning-feedback-cicd@${{ env.PROJECT_ID }}.iam.gserviceaccount.com'
-      
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v1'
+          workload_identity_provider: "projects/{{ env.PROJECT_NUM }}/locations/global/workloadIdentityPools/github-actions-pool/providers/github"
+          service_account: "genai-app-cicd@${{ env.PROJECT_ID }}.iam.gserviceaccount.com"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
         with:
-          version: '>= 379.0.0'
+          version: ">= 379.0.0"
 
       - name: Configure Artifact Registry
         run: gcloud auth configure-docker ${{ env.REGISTRY }}
