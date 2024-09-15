@@ -17,10 +17,9 @@ jobs:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - id: "auth"
-        name: Authenticate to Google Cloud
+      - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
           project_id: ${{ env.PROJECT_ID }}
@@ -29,11 +28,9 @@ jobs:
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
-        with:
-          version: ">= 379.0.0"
 
       - name: Configure Artifact Registry
-        run: gcloud auth configure-docker ${{ env.REGISTRY }}
+        run: gcloud auth configure-docker ${{ env.DOCKER_REGISTRY }}
 
       - name: Build, tag and push container
         id: build-image
