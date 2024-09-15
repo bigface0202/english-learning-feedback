@@ -32,3 +32,6 @@ jobs:
 
       - name: Use Cloud SDK
         run: gcloud config list
+
+      - name: Use Cloud SDK
+        run: gcloud artifacts docker images list asia-northeast1-docker.pkg.dev/ksst-genai-app/genai-app
