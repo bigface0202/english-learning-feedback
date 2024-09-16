@@ -6,7 +6,7 @@
 
 ## Architecture
 
-![Architecture](data/architecture.png)
+![Architecture](data/english-learning-feedback.png)
 
 ## Tech Stack
 
